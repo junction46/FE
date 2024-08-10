@@ -10,10 +10,10 @@ interface TypoProps {
 export interface NodeProps {
   id: string;
   title: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
   isMain?: boolean;
   isRounded?: boolean;
 }
