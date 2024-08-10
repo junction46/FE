@@ -6,10 +6,16 @@ import Header from "./components/home/Header";
 import Quiz from "./pages/quiz";
 import Note from "./pages/note";
 import Callback from "./pages/callback";
+import Sidebar from "./components/home/Sidebar";
+import useStore from "./store";
 
 const AddHeader = () => {
+  const { sidebarOpen } = useStore();
+
   return (
     <>
+      <Sidebar $open={sidebarOpen} />
+
       <Col $fullw $fullh style={{ flex: 1 }}>
         <Header />
         <Outlet />
@@ -26,7 +32,7 @@ const AppRouter = () => {
           <Route element={<AddHeader />}>
             <Route path="/" element={<Home />} />
             <Route path="/callback" element={<Callback />} />
-            <Route path="/test" element={<TestPage />} />
+            <Route path="/map/:id" element={<TestPage />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/note" element={<Note />} />
           </Route>

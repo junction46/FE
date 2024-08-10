@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Title } from "./Typo";
 
 interface RoadmapListProps {
+  topic: string;
   roadmap: RoadmapData[];
   onRoadmapClick: (index: number) => void;
   selectedRoadmap: number | null;
@@ -11,6 +12,7 @@ interface RoadmapListProps {
 }
 
 const RoadmapList: React.FC<RoadmapListProps> = ({
+  topic,
   roadmap,
   onRoadmapClick,
   selectedRoadmap,
@@ -34,7 +36,7 @@ const RoadmapList: React.FC<RoadmapListProps> = ({
       ))}
       <InputText>
         <Title color={"--white"} $bold style={{ fontSize: "32px" }}>
-          HardCoded
+          {topic}
         </Title>
       </InputText>
     </RoadmapListContainer>

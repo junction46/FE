@@ -6,6 +6,7 @@ import useStore from "../../store";
 import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import QuizIcon from "@material-symbols/svg-300/rounded/quiz.svg?react";
 import useUser, { logout } from "../../lib/hooks/useUser";
+import { Link } from "react-router-dom";
 export default function Header() {
   const { sidebarOpen, setSidebarOpen } = useStore();
   const location = useLocation();
@@ -41,7 +42,10 @@ export default function Header() {
                 </SvgContainer>
               </>
             )}
-            <div style={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+            <Link
+              to="/"
+              style={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+            >
               <img
                 src={Logo}
                 width={120}
@@ -49,7 +53,8 @@ export default function Header() {
                 alt="실크로드 로고"
                 style={{ marginLeft: 0 }}
               />
-            </div>
+            </Link>
+
             {!user ? (
               <>
                 <Heading

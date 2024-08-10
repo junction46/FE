@@ -3,10 +3,20 @@ import ViewSidebar from "@material-symbols/svg-300/rounded/view_sidebar.svg?reac
 import { Col, SvgContainer } from "../atomic";
 import useStore from "../../store";
 import { Body } from "../Typo";
+import { useEffect, useState } from "react";
+import { getRoadMap } from "../../lib/api/gpt";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Sidebar({ $open }: { $open: boolean }) {
   const { sidebarOpen, setSidebarOpen } = useStore();
 
+  const [data, setData] = useState<string[]>([]);
+  useEffect(() => {
+    getRoadMap().then((res) => {
+      setData(res);
+    });
+  }, []);
   return (
     <>
       <Container $open={$open}>
@@ -26,10 +36,16 @@ export default function Sidebar({ $open }: { $open: boolean }) {
               Recent Searches
             </Body>
             <Col gap={"12px"}>
-              <Body color={"--primary5"}>House Building</Body>
+              {data.map((elm, i) => (
+                <Link key={i} to={"/map/" + elm}>
+                  <Body color={"--primary5"} style={{ cursor: "pointer" }}>
+                    {elm}
+                  </Body>
+                </Link>
+              ))}
             </Col>
           </Col>
-          <Col gap={"16px"}>
+          {/* <Col gap={"16px"}>
             <Body color={"--labels-primary"} $bold>
               This month
             </Body>
@@ -47,7 +63,7 @@ export default function Sidebar({ $open }: { $open: boolean }) {
               <Body color={"--primary5"}>Quadratic function</Body>
               <Body color={"--primary5"}>Calculus</Body>
             </Col>
-          </Col>
+          </Col> */}
         </Col>
       </Container>
     </>

@@ -1,21 +1,22 @@
 import { useState, useRef, useEffect } from "react";
 import RoadmapList from "../components/roadmaplist";
-import { roadmap } from "../data";
 import TopicList from "../components/topiclist";
 import styled from "styled-components";
 import { TopicData } from "../types/type";
 import Modal from "../components/modal";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Col, Row, SvgContainer } from "../components/atomic";
 import { Heading, Display } from "../components/Typo";
 import Info from "@material-symbols/svg-300/rounded/info.svg?react";
 import ArrowBack from "@material-symbols/svg-300/rounded/arrow_back.svg?react";
+import { getRoadMapData } from "../lib/api/gpt";
 
 const PageContainer = styled.div`
   height: 100vh;
   overflow-y: auto;
   padding: 0 80px;
   outline: none;
+  margin-bottom: 24px;
 `;
 
 const Content = styled.div`
@@ -50,6 +51,14 @@ const BlueBox = styled.div`
 `;
 
 export default function TestPage() {
+  const id = useParams().id;
+  const [roadmap, setRoadmap] = useState([]);
+  useEffect(() => {
+    getRoadMapData({ id }).then((res: string) => {
+      setRoadmap(JSON.parse(res.slice(7, res.length - 3))["roadmap"]);
+    });
+  }, []);
+
   const [selectedRoadmapIndex, setSelectedRoadmapIndex] = useState<
     number | null
   >(null);
@@ -115,7 +124,7 @@ export default function TestPage() {
                 </Row>
               </Link>
               <Display $bold color={"--labels-primary"}>
-                Roadmap for Web programming
+                {id ?? "Loading..."}
               </Display>
             </Col>
           </BlueBox>
@@ -134,6 +143,7 @@ export default function TestPage() {
         <Content ref={containerRef}>
           <RoadmapContainer>
             <RoadmapList
+              topic={id}
               roadmap={roadmap}
               onRoadmapClick={handleRoadmapClick}
               selectedRoadmap={selectedRoadmapIndex}

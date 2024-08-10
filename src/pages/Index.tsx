@@ -8,13 +8,23 @@ import useUser from "../lib/hooks/useUser";
 import { getCurrentUser } from "../lib/api/user";
 import { makeTopic } from "../lib/api/gpt";
 import { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 export default function Home() {
   const [topic, setTopic] = useState<string>("");
+
+  const router = useNavigate();
+
   const handleSubmit = (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
+    toast.loading("로드맵을 생성하는 중");
+    const temp: string = topic;
+    setTopic("");
     makeTopic({ topic }).then(() => {
-      setTopic("");
+      toast.dismiss();
+      toast.success("로드맵이 생성되었습니다.");
+      router("/map/" + temp);
     });
   };
   return (
