@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LineProps, NodeProps } from "../types/type";
+import { NodeProps } from "../types/type";
 import { Line, Node } from "../components/Nodes";
 
 const TestPage: React.FC = () => {
@@ -82,18 +82,19 @@ const TestPage: React.FC = () => {
     { start: "html", end: "html-basics" },
     { start: "html", end: "css-basics" },
     { start: "git", end: "frontend" },
+    { start: "git", end: "backend" },
     { start: "html", end: "backend" },
     { start: "frontend", end: "vue" },
     { start: "backend", end: "node" },
     { start: "backend", end: "database" },
-    { start: "frontend", end: "security" },
+    { start: "git", end: "security" },
     { start: "backend", end: "devops" },
     { start: "security", end: "security-fundamentals" },
     { start: "devops", end: "ci-cd" },
   ];
 
   return (
-    <svg width="800" height="650">
+    <svg width="1000" height="800">
       {lines.map((line, index) => {
         const startNode = nodes.find((node) => node.id === line.start);
         const endNode = nodes.find((node) => node.id === line.end);

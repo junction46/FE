@@ -9,11 +9,17 @@ export const Node: React.FC<NodeProps> = ({
   isMain = false,
   isRounded = false,
 }): JSX.Element => {
-  const backgroundColor = isMain ? "#6366F1" : isRounded ? "white" : "#F3F4F6";
+  // isMain: 최상위 노드, !isMain, !isRounded: 중간, !iwMain, !isRounded: 최하위
+  const backgroundColor = isMain
+    ? "#6366F1"
+    : isRounded
+    ? "white"
+    : "var(--primary1)";
   const textColor = isMain ? "white" : "black";
   const fontSize = isMain ? "16px" : "14px";
-  const fontWeight = isMain ? "bold" : "normal";
+  const fontWeight = "600";
   const borderRadius = isRounded ? height / 2 : 8;
+  const stroke = isMain ? "var(--primary5)" : "var(--primary2)";
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -23,7 +29,7 @@ export const Node: React.FC<NodeProps> = ({
         rx={borderRadius}
         ry={borderRadius}
         fill={backgroundColor}
-        stroke="#E5E7EB"
+        stroke={stroke}
         strokeWidth="1"
       />
       <text
