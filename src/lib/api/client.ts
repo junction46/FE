@@ -27,11 +27,7 @@ authClient.interceptors.response.use(
       error.response.status === 401 ||
       error.response.status === 500
     ) {
-      try {
-        return authClient(error.config);
-      } catch (e: any) {
-        console.error(e.message);
-      }
+      localStorage.removeItem("jwt");
     }
     return Promise.reject(error);
   }

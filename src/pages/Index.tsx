@@ -6,9 +6,17 @@ import Arrow from "@material-symbols/svg-300/sharp/arrow_forward.svg?react";
 import Logo from "../assets/silkroad.png";
 import useUser from "../lib/hooks/useUser";
 import { getCurrentUser } from "../lib/api/user";
+import { makeTopic } from "../lib/api/gpt";
+import { FormEvent, useState } from "react";
 
 export default function Home() {
-  const { user, refetchUser } = useUser();
+  const [topic, setTopic] = useState<string>("");
+  const handleSubmit = (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    makeTopic({ topic }).then(() => {
+      setTopic("");
+    });
+  };
   return (
     <>
       <Container>
@@ -18,9 +26,12 @@ export default function Home() {
           $fullh
           style={{ flexDirection: "column-reverse" }}
         >
-          <InputContainer>
-            <Input />
-            <InputIcon>
+          <InputContainer onSubmit={handleSubmit}>
+            <Input value={topic} onChange={(e) => setTopic(e.target.value)} />
+            <InputIcon
+              onClick={() => handleSubmit()}
+              style={{ cursor: "pointer" }}
+            >
               <SvgContainer $fill={"--white"} width={"16px"} height={"16px"}>
                 <Arrow />
               </SvgContainer>
@@ -66,7 +77,7 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   position: relative;
   width: 100%;
   height: 60px;

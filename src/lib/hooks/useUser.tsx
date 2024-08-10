@@ -16,7 +16,7 @@ const useUser = () => {
     retry: false,
   });
   useEffect(() => {
-    if (error) logout();
+    if (error && localStorage.getItem("jwt")) logout();
   }, [error]);
   useEffect(() => {
     const handleStorageChange = () => {
