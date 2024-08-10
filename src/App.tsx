@@ -1,7 +1,11 @@
+import AppRouter from "./router";
+
 function App() {
   return (
     <>
-      <h1>로드맵짜세요</h1>
+      <div>
+        <AppRouter />
+      </div>
     </>
   );
 }
