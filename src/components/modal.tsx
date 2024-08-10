@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Body, Label, Title } from "./Typo";
+import { Body, Display, Heading, Label, Title, Typo } from "./Typo";
+import { Blank } from "./container";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,21 +21,19 @@ const ModalOverlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
   z-index: 1000;
 `;
 
 const ModalContent = styled.div`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  right: 0;
   background: var(--white);
-  padding: 20px;
-  border: 2px solid var(--primary2);
-  border-radius: 20px;
-  width: 500px;
+  padding: 60px;
+  width: 60%;
+  height: 100%;
   z-index: 1001;
+  box-shadow: -10px 0 25px rgba(0, 0, 0, 0.1);
 `;
 
 const ModalCloseButton = styled.button`
@@ -61,15 +60,13 @@ const Modal: React.FC<ModalProps> = ({
     <ModalOverlay isOpen={isOpen} onClick={onClose}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         <ModalCloseButton onClick={onClose}>&times;</ModalCloseButton>
-        <Title $bold>{title}</Title>
-        <p>{description}</p>
-        <h4>Learning Goals</h4>
-        <ul>
+
+        {/* {<ul>
           {learningGoals.map((goal, index) => (
             <li key={index}>{goal}</li>
           ))}
-        </ul>
-        <Body $bold>Recommended Sites</Body>
+        </ul>} */}
+        <Title $bold>Recommended Sites</Title>
         <ul>
           {recommendations.map((rec, index) => (
             <a
@@ -79,29 +76,41 @@ const Modal: React.FC<ModalProps> = ({
               rel="noopener noreferrer"
               style={{ color: "var(--primary3)", wordBreak: "break-all" }}
             >
-              {rec}
+              <Heading color="--primary3">{rec}</Heading>
             </a>
           ))}
         </ul>
-        <Body $bold>Latest Trends</Body>
+        <Blank height="60px" />
+        <Title $bold>Latest Trends</Title>
         <ul>
           {latestTrends.map((trend, index) => (
-            <Label color="--primary3" $bold key={index}>
+            <Heading color="--primary3" $bold key={index}>
               {trend}
-            </Label>
+            </Heading>
           ))}
         </ul>
-        <Body $bold>Projects Suggestions</Body>
+        <Blank height="60px" />
+        <Title $bold>Projects Suggestions</Title>
         <ul>
           {projects.map((project, index) => (
-            <Label color="--primary3" $bold key={index}>
+            <Heading color="--primary3" $bold key={index}>
               {project}
-            </Label>
+            </Heading>
           ))}
         </ul>
+        <Blank height="40px" />
+        <hr />
+        <Blank height="5px" />
+        <Notes $bold>Notes</Notes>
+        <Blank height="5px" />
+        <hr />
       </ModalContent>
     </ModalOverlay>
   );
 };
 
 export default Modal;
+
+const Notes = styled(Typo)`
+  font-size: 32px;
+`;

@@ -51,21 +51,21 @@ const RoadmapListContainer = styled.div`
 
 const GrayLine = styled.div`
   width: 2px;
-  height: 30px;
+  height: 50px;
   background-color: var(--gray3);
 `;
 
 const PrimaryList = styled.div<{ isSelected: boolean }>`
-  min-width: 100px;
-  max-width: 300px;
+  min-width: 150px;
+  max-width: 350px;
   border-radius: 10px;
   border: 2px solid var(--primary2);
   background-color: ${({ isSelected }) =>
-    isSelected ? "var(--primary3)" : "var(--primary1)"};
+    isSelected ? "var(--primary1)" : "var(--white)"};
   display: flex;
   justify-content: center;
   align-content: center;
   text-align: center;
-  padding: 10px 20px;
+  padding: 10px 30px;
   cursor: pointer;
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { TypoProps } from "../../types/type";
 
-const Typo = styled.div<TypoProps>`
+export const Typo = styled.div<TypoProps>`
   color: ${(p) => (p.color ? `var(${p.color})` : `var(--black)`)};
   font-weight: ${(p) => (p.$bold ? "600" : "400")};
   text-decoration: ${(p) => (p.$underline ? "underline" : "")};

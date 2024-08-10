@@ -32,7 +32,11 @@ const TopicListContainer = styled.div`
 `;
 
 const TopicItem = styled.div`
-  padding: 10px;
+  min-width: 150px;
+  max-width: 350px;
+  padding: 10px 30px;
+  background-color: var(--white);
   border: 2px solid var(--primary2);
   border-radius: 15px;
+  text-align: center;
 `;

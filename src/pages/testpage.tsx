@@ -14,9 +14,25 @@ export default function TestPage() {
   const topicListRef = useRef<HTMLDivElement | null>(null);
   const roadmapItemRef = useRef<HTMLDivElement[]>([]);
 
+  // 선택된 로드맵과 토픽 리스트 연결 정보를 관리하는 상태
+  const [connections, setConnections] = useState<
+    {
+      primaryRef: React.RefObject<HTMLDivElement>;
+      secondaryRef: React.RefObject<HTMLDivElement>;
+    }[]
+  >([]);
+
   const handleRoadmapClick = (index: number) => {
     setSelectedRoadmapIndex(index);
-    setSelectedTopic(null); // 로드맵 선택 시, 토픽 선택 해제
+    setSelectedTopic(null);
+
+    // 연결 정보 업데이트
+    setConnections([
+      {
+        primaryRef: { current: roadmapItemRef.current[index] },
+        secondaryRef: { current: topicListRef.current },
+      },
+    ]);
   };
 
   const handleTopicClick = (topic: TopicData) => {
@@ -41,7 +57,7 @@ export default function TestPage() {
 
         topicListElement.style.position = "absolute";
         topicListElement.style.top = `${roadmapItemRect.top}px`;
-        topicListElement.style.left = `${roadmapItemRect.right + 20}px`; // 필요한 경우 조정
+        topicListElement.style.left = `${roadmapItemRect.right + 20}px`; // 필요에 따라 조정
       }
     }
   }, [selectedRoadmapIndex]);
@@ -52,11 +68,11 @@ export default function TestPage() {
         roadmap={roadmap}
         onRoadmapClick={handleRoadmapClick}
         selectedRoadmap={selectedRoadmapIndex}
-        roadmapItemRef={roadmapItemRef} // Add ref passing
+        roadmapItemRef={roadmapItemRef}
       />
       {selectedRoadmapIndex !== null && (
         <TopicList
-          ref={topicListRef} // TopicList에 ref 전달
+          ref={topicListRef}
           topics={roadmap[selectedRoadmapIndex].topics}
           onTopicClick={handleTopicClick}
         />
@@ -81,4 +97,5 @@ export default function TestPage() {
 
 const Rowww = styled.div`
   display: flex;
+  position: relative; /* Ensure the LineConnector is positioned relative to this container */
 `;
