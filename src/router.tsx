@@ -5,6 +5,7 @@ import { Col } from "./components/atomic";
 import Header from "./components/home/Header";
 import Quiz from "./pages/quiz";
 import Note from "./pages/note";
+import Callback from "./pages/callback";
 
 const AddHeader = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Routes>
           <Route element={<AddHeader />}>
             <Route path="/" element={<Home />} />
+            <Route path="/callback" element={<Callback />} />
             <Route path="/test" element={<TestPage />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/note" element={<Note />} />

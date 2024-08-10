@@ -3,11 +3,17 @@ import ViewSidebar from "@material-symbols/svg-300/rounded/view_sidebar.svg?reac
 import Logo from "../../assets/silkroad.png";
 import { Heading, Title } from "../Typo";
 import useStore from "../../store";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 import QuizIcon from "@material-symbols/svg-300/rounded/quiz.svg?react";
+import useUser, { logout } from "../../lib/hooks/useUser";
 export default function Header() {
   const { sidebarOpen, setSidebarOpen } = useStore();
   const location = useLocation();
+
+  const { user } = useUser();
+  const handleLogin = () => {
+    window.location.href = `http://localhost:3000/auth/google`;
+  };
   return (
     <>
       <Row gap={"20px"} padding={"24px 62px"} $fullw align={"center"}>
@@ -44,7 +50,27 @@ export default function Header() {
                 style={{ marginLeft: 0 }}
               />
             </div>
-            <Heading color={"--primary5"}>Login</Heading>
+            {!user ? (
+              <>
+                <Heading
+                  color={"--primary5"}
+                  onClick={() => handleLogin()}
+                  style={{ cursor: "pointer" }}
+                >
+                  Login
+                </Heading>
+              </>
+            ) : (
+              <>
+                <Heading
+                  color={"--black"}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => logout()}
+                >
+                  {user.data.name}
+                </Heading>
+              </>
+            )}
           </>
         )}
       </Row>

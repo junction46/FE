@@ -4,8 +4,11 @@ import Header from "../components/home/Header";
 import { Body, Heading, Title } from "../components/Typo";
 import Arrow from "@material-symbols/svg-300/sharp/arrow_forward.svg?react";
 import Logo from "../assets/silkroad.png";
+import useUser from "../lib/hooks/useUser";
+import { getCurrentUser } from "../lib/api/user";
 
 export default function Home() {
+  const { user, refetchUser } = useUser();
   return (
     <>
       <Container>
