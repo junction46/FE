@@ -20,7 +20,7 @@ const ModalOverlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.8);
   z-index: 1000;
 `;
 
@@ -32,13 +32,9 @@ const ModalContent = styled.div`
   background: var(--white);
   padding: 20px;
   border: 2px solid var(--primary2);
-  border-radius: 8px;
+  border-radius: 20px;
   width: 500px;
   z-index: 1001;
-`;
-
-const ModalHeader = styled.h2`
-  margin-top: 0;
 `;
 
 const ModalCloseButton = styled.button`
