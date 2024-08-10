@@ -24,6 +24,10 @@ body {
   font-family: "pretendard";
 }
 
+a {
+  text-decoration: none;
+}
+
 :root {
   --labels-primary: #000;
   --primary1: #ebebf9;

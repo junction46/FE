@@ -35,7 +35,6 @@ export default function Header() {
                 </SvgContainer>
               </>
             )}
-
             <div style={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
               <img
                 src={Logo}

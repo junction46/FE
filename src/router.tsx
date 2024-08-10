@@ -4,6 +4,7 @@ import Home from "./pages/Index";
 import { Col } from "./components/atomic";
 import Header from "./components/home/Header";
 import Quiz from "./pages/quiz";
+import Note from "./pages/note";
 
 const AddHeader = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
             <Route path="/" element={<TestPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/note" element={<Note />} />
           </Route>
         </Routes>
       </BrowserRouter>
