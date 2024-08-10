@@ -1,5 +1,5 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import TestPage from "./pages/test";
+import TestPage from "./pages/testpage";
 import Home from "./pages/Index";
 import { Col } from "./components/atomic";
 import Header from "./components/home/Header";

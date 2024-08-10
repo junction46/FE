@@ -84,6 +84,24 @@ export const roadmap = [
           "Build a simple single-page application (SPA)",
         ],
       },
+      {
+        title: "DOM Manipulation",
+        description:
+          "Learn how to interact with the Document Object Model using JavaScript.",
+        learning_goals: [
+          "Understand the DOM structure",
+          "Learn to select, manipulate, and style elements dynamically",
+        ],
+        recommendations: [
+          "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model",
+          "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
+        ],
+        latest_trends: ["Virtual DOM", "Shadow DOM"],
+        projects: [
+          "Create a dynamic image gallery",
+          "Build a simple single-page application (SPA)",
+        ],
+      },
     ],
   },
   {

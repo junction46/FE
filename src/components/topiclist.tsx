@@ -39,4 +39,5 @@ const TopicItem = styled.div`
   border: 2px solid var(--primary2);
   border-radius: 15px;
   text-align: center;
+  cursor: pointer;
 `;

@@ -32,6 +32,11 @@ const RoadmapList: React.FC<RoadmapListProps> = ({
           <GrayLine />
         </Wrapper>
       ))}
+      <InputText>
+        <Title color={"--white"} $bold style={{ fontSize: "32px" }}>
+          HardCoded
+        </Title>
+      </InputText>
     </RoadmapListContainer>
   );
 };
@@ -68,4 +73,18 @@ const PrimaryList = styled.div<{ isSelected: boolean }>`
   text-align: center;
   padding: 10px 30px;
   cursor: pointer;
+`;
+const InputText = styled.div`
+  width: 400px;
+  padding: 15px 30px;
+  border-radius: 15px;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    #468bfa,
+    #8c74eb,
+    #d750bd,
+    #fc2f5a,
+    #ff772b
+  );
 `;
