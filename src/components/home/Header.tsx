@@ -10,7 +10,7 @@ export default function Header() {
   const location = useLocation();
   return (
     <>
-      <Row gap={"20px"} padding={"24px"} $fullw align={"center"}>
+      <Row gap={"20px"} padding={"24px 62px"} $fullw align={"center"}>
         {location.pathname === "/quiz" ? (
           <>
             <SvgContainer width={"32px"} height={"32px"} $fill={"#1C1B1F"}>
