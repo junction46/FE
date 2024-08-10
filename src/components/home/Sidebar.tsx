@@ -58,7 +58,7 @@ const Container = styled.div<{ $open: boolean }>`
   max-width: ${(p) => (p.$open ? "280px" : "0")};
   width: ${(p) => (p.$open ? "280px" : "0")};
   height: 100%;
-  padding: ${(p) => (p.$open ? "24px" : "24px 0")};
+  padding: ${(p) => (p.$open ? "36px" : "36px 0")};
   background-color: var(--primary1);
   opacity: ${(p) => (p.$open ? "1" : "0")};
   overflow: hidden;
