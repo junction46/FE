@@ -20,15 +20,16 @@ const RoadmapList: React.FC<RoadmapListProps> = ({
 }) => {
   return (
     <RoadmapListContainer>
-      {roadmap.map((item, index) => (
+      {roadmap?.map((item, index) => (
         <Wrapper
           key={index}
           ref={(el) => (roadmapItemRef.current[index] = el!)}
         >
           <PrimaryList
             onClick={() => onRoadmapClick(index)}
-            isSelected={index === selectedRoadmap}
+            isPassed={item.pass}
           >
+            {item.pass && <CheckMark>✔</CheckMark>}
             <Title $bold>{item.title}</Title>
           </PrimaryList>
           <GrayLine />
@@ -62,20 +63,30 @@ const GrayLine = styled.div`
   background-color: var(--gray3);
 `;
 
-const PrimaryList = styled.div<{ isSelected: boolean }>`
+const PrimaryList = styled.div<{ isPassed: boolean }>`
   min-width: 150px;
   max-width: 350px;
   border-radius: 10px;
-  border: 2px solid var(--primary2);
-  background-color: ${({ isSelected }) =>
-    isSelected ? "var(--primary1)" : "var(--white)"};
+  border: 2px solid
+    ${({ isPassed }) => (isPassed ? "green" : "var(--primary2)")};
+  background-color: ${({ isPassed }) =>
+    isPassed ? "var(--primary1)" : "var(--white)"};
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-content: center;
   text-align: center;
   padding: 10px 30px;
   cursor: pointer;
+  position: relative; /* Add this to position the checkmark */
 `;
+
+const CheckMark = styled.div`
+  position: absolute;
+  left: 10px;
+  color: green;
+  font-size: 18px;
+`;
+
 const InputText = styled.div`
   width: 400px;
   padding: 15px 30px;

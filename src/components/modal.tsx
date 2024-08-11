@@ -4,6 +4,8 @@ import { Body, Display, Heading, Label, Title, Typo } from "./Typo";
 import { Blank } from "./container";
 import Closearrow from "@material-symbols/svg-300/sharp/arrow_back_ios_new.svg?react";
 import { Col, Row, SvgContainer } from "./atomic";
+import { recallMemo, saveMemo, submitMemo } from "../lib/api/memo";
+import { toast } from "react-toastify";
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,6 +16,10 @@ interface ModalProps {
   recommendations: string[];
   latestTrends: string[];
   projects: string[];
+
+  subject: string;
+  topic: string;
+  concept: string;
 }
 
 const fadeIn = keyframes`
@@ -133,9 +139,21 @@ const Modal: React.FC<ModalProps> = ({
   recommendations,
   latestTrends,
   projects,
+  subject,
+  topic,
+  concept,
 }) => {
   const [closing, setClosing] = useState(false);
   const noteRef = useRef<HTMLTextAreaElement | null>(null);
+  const [note, setNote] = useState("");
+
+  const [noteInfo, setNoteInfo] = useState(null);
+
+  useEffect(() => {
+    recallMemo({ subject, topic, concept }).then((res) => {
+      setNote(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -234,20 +252,83 @@ const Modal: React.FC<ModalProps> = ({
           <GrayLine />
         </Col>
         <Blank height={"16px"} />
-        <Note ref={noteRef} placeholder="Press any key to start a note" />
+        <Note
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          ref={noteRef}
+          placeholder="Press any key to start a note"
+        />
         <Blank height={"16px"} />
         <Row gap={"8px"}>
-          <SaveBtn>
+          <SaveBtn
+            onClick={() =>
+              saveMemo({ subject, topic, concept, memo: note }).then(() => {
+                toast.success("노트를 저장하였습니다.");
+              })
+            }
+          >
             <Body $bold style={{ color: "#242986" }}>
               Save
             </Body>
           </SaveBtn>
-          <SubmitBtn>
+          <SubmitBtn
+            onClick={() =>
+              submitMemo({ subject, topic, concept, memo: note }).then(
+                (res) => {
+                  setNoteInfo(res.data);
+                  console.log(res.data);
+                  toast.success(
+                    "노트를 제출하였습니다. 결과 분석을 기다려주세요..."
+                  );
+                }
+              )
+            }
+          >
             <Body $bold color={"--white"}>
               Submit to AI ✨
             </Body>
           </SubmitBtn>
         </Row>
+
+        <Blank height={"36px"} />
+        {noteInfo && (
+          <>
+            <ScoreBox>
+              <Col
+                gap={"16px"}
+                style={{
+                  borderBottom: "2px solid var(--primary2)",
+                  padding: "12px 24px",
+                }}
+              >
+                <Heading $bold color={"--primary6"}>
+                  Your comprehension score is
+                </Heading>
+                <Display color={"--labels-primary"}>
+                  {noteInfo?.understanding}
+                </Display>
+              </Col>
+              <Col gap={"32px"} padding={"12px 24px"}>
+                {noteInfo?.errors.map((elm, i) => (
+                  <Col key={i} gap={"16px"}>
+                    <Col gap={"12px"}>
+                      <Heading $bold color={"--negative"}>
+                        Logical problem found #{i + 1}
+                      </Heading>
+                      <Body color={"--black"}>{elm.error_message}</Body>
+                    </Col>
+                    <Col gap={"12px"}>
+                      <Heading $bold color={"--positive"}>
+                        Advice #{i + 1}
+                      </Heading>
+                      <Body color={"--black"}>{elm.suggestion}</Body>
+                    </Col>
+                  </Col>
+                ))}
+              </Col>
+            </ScoreBox>
+          </>
+        )}
       </ModalContent>
     </ModalOverlay>
   );
@@ -302,6 +383,8 @@ const SaveBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 const SubmitBtn = styled.div`
@@ -313,4 +396,12 @@ const SubmitBtn = styled.div`
 
   padding: 12px 20px;
   white-space: nowrap;
+
+  cursor: pointer;
+`;
+
+const ScoreBox = styled.div`
+  border-radius: 10px;
+  border: 2px solid var(--primary2);
+  background: var(--white);
 `;

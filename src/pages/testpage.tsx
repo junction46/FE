@@ -54,10 +54,10 @@ export default function TestPage() {
   const id = useParams().id;
   const [roadmap, setRoadmap] = useState([]);
   useEffect(() => {
-    getRoadMapData({ id }).then((res: string) => {
-      setRoadmap(JSON.parse(res.slice(7, res.length - 3))["roadmap"]);
+    getRoadMapData({ id }).then((res) => {
+      setRoadmap(res.roadmap);
     });
-  }, []);
+  }, [id]);
 
   const [selectedRoadmapIndex, setSelectedRoadmapIndex] = useState<
     number | null
@@ -172,6 +172,9 @@ export default function TestPage() {
           recommendations={selectedTopic.recommendations}
           latestTrends={selectedTopic.latest_trends}
           projects={selectedTopic.projects}
+          subject={id}
+          topic={roadmap[selectedRoadmapIndex].title}
+          concept={selectedTopic.title}
         />
       )}
     </PageContainer>
