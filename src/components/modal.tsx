@@ -1,12 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes, css } from "styled-components";
-import { Body, Display, Heading, Label, Title, Typo } from "./Typo";
+import {
+  Body,
+  Display,
+  Heading,
+  Label,
+  TextProtect,
+  Title,
+  Typo,
+} from "./Typo";
 import { Blank } from "./container";
 import Closearrow from "@material-symbols/svg-300/sharp/arrow_back_ios_new.svg?react";
 import { Col, Row, SvgContainer } from "./atomic";
 import { recallMemo, saveMemo, submitMemo } from "../lib/api/memo";
 import { toast } from "react-toastify";
-
+import { makeTopic } from "../lib/api/gpt";
+import { useNavigate } from "react-router-dom";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -178,7 +187,23 @@ const Modal: React.FC<ModalProps> = ({
   if (!isOpen && closing) {
     return null;
   }
+  const router = useNavigate();
+  const handleSubmit = (topic: string) => {
+    toast.loading("로드맵을 생성하는 중");
+    const temp: string = topic;
 
+    makeTopic({ topic }).then(() => {
+      toast.dismiss();
+      setClosing(true);
+      const timer = setTimeout(() => {
+        onClose();
+        setClosing(false);
+      }, 300);
+
+      router("/map/" + temp);
+      clearTimeout(timer);
+    });
+  };
   return (
     <ModalOverlay
       isOpen={isOpen}
@@ -228,8 +253,13 @@ const Modal: React.FC<ModalProps> = ({
             <Title $bold>Latest trends ✨</Title>
             <Col gap={"24px"}>
               {latestTrends.map((elm, index) => (
-                <Body key={index}>
-                  <a href={elm}>{elm}</a>
+                <Body
+                  key={index}
+                  style={{ cursor: "pointer" }}
+                  color={"--primary5"}
+                  onClick={() => handleSubmit(elm)}
+                >
+                  {elm}
                 </Body>
               ))}
             </Col>
@@ -238,8 +268,13 @@ const Modal: React.FC<ModalProps> = ({
             <Title $bold>Projects suggestions 👍</Title>
             <Col gap={"24px"}>
               {projects.map((elm, index) => (
-                <Body key={index}>
-                  <a href={elm}>{elm}</a>
+                <Body
+                  key={index}
+                  style={{ cursor: "pointer" }}
+                  color={"--primary5"}
+                  onClick={() => handleSubmit(elm)}
+                >
+                  {elm}
                 </Body>
               ))}
             </Col>

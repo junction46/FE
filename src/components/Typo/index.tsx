@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { TypoProps } from "../../types/type";
-
+export const TextProtect = styled.div`
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 export const Typo = styled.div<TypoProps>`
   color: ${(p) => (p.color ? `var(${p.color})` : `var(--black)`)};
   font-weight: ${(p) => (p.$bold ? "600" : "400")};

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ViewSidebar from "@material-symbols/svg-300/rounded/view_sidebar.svg?react";
 import { Col, SvgContainer } from "../atomic";
 import useStore from "../../store";
-import { Body } from "../Typo";
+import { Body, TextProtect } from "../Typo";
 import { useEffect, useState } from "react";
 import { getRoadMap } from "../../lib/api/gpt";
 import React from "react";
@@ -39,7 +39,7 @@ export default function Sidebar({ $open }: { $open: boolean }) {
               {data.map((elm, i) => (
                 <Link key={i} to={"/map/" + elm}>
                   <Body color={"--primary5"} style={{ cursor: "pointer" }}>
-                    {elm}
+                    <TextProtect>{elm}</TextProtect>
                   </Body>
                 </Link>
               ))}
