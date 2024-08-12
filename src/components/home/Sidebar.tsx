@@ -7,16 +7,18 @@ import { useEffect, useState } from "react";
 import { getRoadMap } from "../../lib/api/gpt";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Sidebar({ $open }: { $open: boolean }) {
   const { sidebarOpen, setSidebarOpen } = useStore();
+  const location = useLocation();
 
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {
     getRoadMap().then((res) => {
       setData(res);
     });
-  }, []);
+  }, [location]);
   return (
     <>
       <Container $open={$open}>
